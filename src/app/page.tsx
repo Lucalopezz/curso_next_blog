@@ -1,10 +1,9 @@
 import { Container } from "@/components/Container";
 import { Header } from "@/components/Header";
+import { PostCoverImage } from "@/components/PostCoverImage";
 import { PostHeading } from "@/components/PostHeading";
 import { PostsList } from "@/components/PostsList";
 import { SpinLoader } from "@/components/SpinLoader";
-import Image from "next/image";
-import Link from "next/link";
 import { Suspense } from "react";
 
 export default async function HomePage() {
@@ -18,22 +17,26 @@ export default async function HomePage() {
         sm:grid-cols-2 
         group"
       >
-        <Link href="#" className="w-full h-full overflow-hidden rounded-xl">
-          <Image
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition"
-            src="/images/bryen_0.png"
-            width={1200}
-            height={720}
-            alt="Título do post"
-            // because it's in the first fold of the page, priority is needed (other images can use lazy loading)
-            priority
-          />
-        </Link>
+        <PostCoverImage
+          linkProps={{
+            href: "/post/asdfasdf",
+          }}
+          imageProps={{
+            width: 1200,
+            height: 720,
+            src: "/images/bryen_9.png",
+            alt: "Alt da imagem",
+            
+            priority: true,
+          }}
+        />
         <div className="flex flex-col gap-1 sm:justify-center">
           <time className="text-slate-600 text-sm/tight" dateTime="2025-4-20">
             20/04/2025
           </time>
-          <PostHeading url="#" as="h1">Ola</PostHeading>
+          <PostHeading url="#" as="h1">
+            Ola
+          </PostHeading>
 
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates

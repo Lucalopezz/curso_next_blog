@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Container } from "@/components/Container";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Este é o blog com NextJS",
+  title: {
+    default: "Este é o blog com NextJS",
+    template: "%s | The Blog",
+  },
   description: "Este é o meu blog criado com NextJS",
 };
 
@@ -13,7 +19,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Container>
+          <Header />
+          {children}
+
+        <Footer/>
+        </Container>
+      </body>
     </html>
   );
 }

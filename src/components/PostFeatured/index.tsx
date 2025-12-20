@@ -1,5 +1,5 @@
 import { PostCoverImage } from "../PostCoverImage";
-import { PostHeading } from "../PostHeading";
+import { PostSummary } from "../PostSummary";
 
 export function PostFeatured() {
   const slug = "dfasda";
@@ -23,21 +23,13 @@ export function PostFeatured() {
           priority: true,
         }}
       />
-      <div className="flex flex-col gap-1 sm:justify-center">
-        <time className="text-slate-600 text-sm/tight" dateTime="2025-4-20">
-          20/04/2025
-        </time>
-        <PostHeading url={postLink} as="h1">
-          Ola
-        </PostHeading>
-
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-          delectus vero nihil rem, at commodi facilis necessitatibus animi
-          officiis eos! Fugit odit, perferendis reiciendis distinctio ut placeat
-          porro veritatis? Natus.
-        </p>
-      </div>
+      <PostSummary
+        postHeading="h1"
+        postLink={postLink}
+        createdAt="2025-02-11T20:59:30"
+        postExcerpt="Isso deixa o fluxo de trabalho mais natural, especialmente para quem já está acostumado com a estrutura de pastas e arquivos."
+        postTitle="O papel do silêncio em uma vida criativa"
+      />
     </section>
   );
 }

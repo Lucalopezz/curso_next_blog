@@ -13,11 +13,12 @@ export class JsonPosRepository implements PostRepository {
     const { posts } = parsedJson;
     return posts;
   }
-  async findAll(): Promise<PostModel[]> {
-    return await this.readFromDisk();
+  async findAllPublic(): Promise<PostModel[]> {
+    const posts = await this.readFromDisk();
+    return posts.filter((post) => post.published === true);
   }
   async findById(id: string): Promise<PostModel> {
-    const posts = await this.findAll();
+    const posts = await this.findAllPublic();
     const post = posts.find((p) => p.id === id);
     if (!post) {
       throw new Error("Post não encontrado");
@@ -25,4 +26,3 @@ export class JsonPosRepository implements PostRepository {
     return post;
   }
 }
-

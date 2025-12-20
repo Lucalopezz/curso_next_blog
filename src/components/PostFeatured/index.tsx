@@ -1,9 +1,11 @@
+import { findAllPublicPosts } from "@/lib/post/queries";
 import { PostCoverImage } from "../PostCoverImage";
 import { PostSummary } from "../PostSummary";
 
-export function PostFeatured() {
-  const slug = "dfasda";
-  const postLink = `/post/${slug}`;
+export async function PostFeatured() {
+  const posts = await findAllPublicPosts();
+  const post = posts[0]
+  const postLink = `/post/${ post.slug}`;
   return (
     <section
       className="grid grid-cols-1 gap-8 mb-16
@@ -17,8 +19,8 @@ export function PostFeatured() {
         imageProps={{
           width: 1200,
           height: 720,
-          src: "/images/bryen_9.png",
-          alt: "Alt da imagem",
+          src: post.coverImageUrl,
+          alt: post.title,
 
           priority: true,
         }}
@@ -26,9 +28,9 @@ export function PostFeatured() {
       <PostSummary
         postHeading="h1"
         postLink={postLink}
-        createdAt="2025-02-11T20:59:30"
-        postExcerpt="Isso deixa o fluxo de trabalho mais natural, especialmente para quem já está acostumado com a estrutura de pastas e arquivos."
-        postTitle="O papel do silêncio em uma vida criativa"
+        createdAt={post.createdAt}
+        postExcerpt={post.excerpt}
+        postTitle={post.title}
       />
     </section>
   );

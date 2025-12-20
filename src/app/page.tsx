@@ -26,7 +26,7 @@ export default async function HomePage() {
             height: 720,
             src: "/images/bryen_9.png",
             alt: "Alt da imagem",
-            
+
             priority: true,
           }}
         />

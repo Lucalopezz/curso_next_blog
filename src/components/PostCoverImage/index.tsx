@@ -10,7 +10,7 @@ export function PostCoverImage({ imageProps, linkProps }: PostCoverImageProps) {
   return (
     <Link
       {...linkProps}
-      className={`w-full h-full overflow-hidden roundede-xl ${linkProps.className}`}
+      className={`w-full h-full overflow-hidden rounded-xl ${linkProps.className}`}
     >
       <Image
         {...imageProps}

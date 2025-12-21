@@ -1,8 +1,13 @@
+import { findPostBySlugCached } from "@/lib/post/queries";
+
 type PostSlugPageProps = {
   params: Promise<{ slug: string }>;
 };
 
 export default async function PostSlugPage({ params }: PostSlugPageProps) {
   const { slug } = await params;
-  return <h1>{slug}</h1>;
+  
+  const post = await findPostBySlugCached(slug);
+
+  return <h1>{post.title}</h1>;
 }

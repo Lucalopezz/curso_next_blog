@@ -6,7 +6,7 @@ import { Suspense } from "react";
 export default async function HomePage() {
   // dark:text-slate-200 dark:bg-slate-900 - it takes the sistem theme
   return (
-    <Suspense fallback={<SpinLoader />}>
+    <Suspense fallback={<SpinLoader className="min-h-[70vh]" />}>
       <PostFeatured />
       <PostsList />
     </Suspense>

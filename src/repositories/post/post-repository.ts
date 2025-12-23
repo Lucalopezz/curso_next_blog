@@ -4,5 +4,5 @@ export interface PostRepository {
   findAllPublic(): Promise<PostModel[]>;
   findAll(): Promise<PostModel[]>;
   findById(id: string): Promise<PostModel>;
-  findBySlugPublic(id: string): Promise<PostModel>;
+  findBySlugPublic(slug: string): Promise<PostModel>;
 }

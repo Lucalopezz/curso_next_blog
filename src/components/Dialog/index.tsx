@@ -20,11 +20,17 @@ export function Dialog({
   /* inset-0 can replace top-0 bottom-0 
           right-0 left-0*/
   if (!isVisible) return null;
+
+  function handleCancel() {
+    if (disabled) return;
+    onCancel();
+  }
   return (
     <div
       className="fixed z-50 top-0 bottom-0 
           right-0 left-0 bg-black/50  backdrop-blur-xs
           flex items-center justify-center"
+      onClick={handleCancel}
     >
       <div
         role="dialog"
@@ -49,7 +55,7 @@ export function Dialog({
               disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed"
             disabled={disabled}
             autoFocus
-            onClick={onCancel}
+            onClick={handleCancel}
           >
             Cancelar
           </button>

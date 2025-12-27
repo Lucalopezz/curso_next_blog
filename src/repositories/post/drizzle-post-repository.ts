@@ -4,6 +4,7 @@ import { drizzleDb } from "@/db/drizzle";
 
 export class DrizzlePostRepository implements PostRepository {
   async findAllPublic(): Promise<PostModel[]> {
+    // console.log("Server: findAllPublic")
     const posts = await drizzleDb.query.posts.findMany({
       orderBy: (posts, { desc }) => desc(posts.createdAt),
       where: (posts, { eq }) => eq(posts.published, true),
@@ -11,6 +12,8 @@ export class DrizzlePostRepository implements PostRepository {
     return posts;
   }
   async findBySlugPublic(slug: string): Promise<PostModel> {
+    // console.log("Server: findBySlugPublic")
+
     const post = await drizzleDb.query.posts.findFirst({
       where: (posts, { eq, and }) =>
         and(eq(posts.published, true), eq(posts.slug, slug)),

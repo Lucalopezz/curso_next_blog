@@ -1,16 +1,13 @@
+import ErrorMessage from "@/components/ErrorMessage";
 import { findAllPostAdmin } from "@/lib/post/queries/admin";
 import Link from "next/link";
-import { DeletePostButton } from "../admin/DeletePostButton";
-import ErrorMessage from "../ErrorMessage";
+import { DeletePostButton } from "../DeletePostButton";
 
 export async function PostsListAdmin() {
   const posts = await findAllPostAdmin();
   if (posts.length <= 0) {
     return (
-      <ErrorMessage
-        contentTitle="Ei!"
-        content="Bora criar algum post? 🤔"
-      />
+      <ErrorMessage contentTitle="Ei!" content="Bora criar algum post? 🤔" />
     );
   }
   return (

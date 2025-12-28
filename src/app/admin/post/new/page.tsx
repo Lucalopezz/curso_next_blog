@@ -1,50 +1,36 @@
-import { Button } from "@/components/Button";
-import { BanIcon, BugIcon, CheckIcon } from "lucide-react";
+import { Input } from "@/components/Input";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminPostNewPage() {
   return (
-    <div>
-      <div className="py-16 flex gap-4 flex-wrap items-center">
-        <Button variant="default" size="sm">
-          <BugIcon /> Confirma
-        </Button>
+    <div className="flex flex-col gap-6">
+      <Input labelText="Nome" placeholder="Digite seu nome" type="text" />
 
-        <Button variant="ghost" size="md">
-          <BugIcon /> Confirma
-        </Button>
-
-        <Button variant="danger" size="lg">
-          <BugIcon /> Confirma
-        </Button>
-      </div>
-
-      <div className="py-16 flex gap-4 flex-wrap items-center">
-        <Button variant="default" size="sm" disabled>
-          <BugIcon /> Confirma
-        </Button>
-
-        <Button variant="ghost" size="md" disabled>
-          <BugIcon /> Confirma
-        </Button>
-
-        <Button variant="danger" size="lg" disabled>
-          <BugIcon /> Confirma
-        </Button>
-
-        <Button variant="danger" size="lg" className="w-full">
-          <BugIcon /> Confirma
-        </Button>
-
-        <Button variant="ghost" size="lg" className="w-full">
-          <BanIcon /> Cancel
-        </Button>
-
-        <Button variant="default" size="lg" className="w-full">
-          <CheckIcon /> OK
-        </Button>
-      </div>
+      <Input
+        labelText="Sobrenome"
+        placeholder="Digite seu sobrenome"
+        type="text"
+      />
+      <Input
+        disabled
+        labelText="Sobrenome"
+        placeholder="Digite seu sobrenome"
+        type="text"
+        defaultValue="teste"
+      />
+      <Input
+        disabled
+        labelText="Sobrenome"
+        placeholder="Digite seu sobrenome"
+        type="text"
+      />
+      <Input
+        readOnly
+        labelText="Sobrenome"
+        placeholder="Digite seu sobrenome"
+        type="text"
+      />
     </div>
   );
 }

@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { InputCheckbox } from "@/components/InputCheckbox";
 import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { useState } from "react";
+import { ImageUploader } from "../ImageUploader";
 
 export function MenagePostForm() {
   const [contentValue, setContentValue] = useState("");
@@ -15,7 +15,7 @@ export function MenagePostForm() {
 
         <Input labelText="Sobrenome" placeholder="Digite seu sobrenome" />
 
-        <InputCheckbox labelText="Sobrenome" />
+        <ImageUploader />
 
         <Input
           disabled

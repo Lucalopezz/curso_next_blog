@@ -43,3 +43,5 @@ next-env.d.ts
 studies.txt
 
 ./db
+
+/public/uploads

@@ -6,9 +6,14 @@ import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { useState } from "react";
 import { ImageUploader } from "../ImageUploader";
 import { InputCheckbox } from "@/components/InputCheckbox";
+import { PublicPost } from "@/dto/post/dto";
 
-export function MenagePostForm() {
-  const [contentValue, setContentValue] = useState("");
+type MenagePostFormProps = {
+  publicPost?: PublicPost;
+};
+
+export function MenagePostForm({ publicPost }: MenagePostFormProps) {
+  const [contentValue, setContentValue] = useState(publicPost?.content || "");
   return (
     <form action="" className="mb-16">
       <div className="flex flex-col gap-6">
@@ -17,7 +22,7 @@ export function MenagePostForm() {
           name="id"
           placeholder="ID gerado automaticamente"
           type="text"
-          defaultValue={""}
+          defaultValue={publicPost?.id || ""}
           readOnly
         />
 
@@ -26,7 +31,7 @@ export function MenagePostForm() {
           name="slug"
           placeholder="Slug gerada automaticamente"
           type="text"
-          defaultValue={""}
+          defaultValue={publicPost?.slug || ""}
           readOnly
         />
 
@@ -35,7 +40,7 @@ export function MenagePostForm() {
           name="author"
           placeholder="Digite o nome do autor"
           type="text"
-          defaultValue={""}
+          defaultValue={publicPost?.author || ""}
         />
 
         <Input
@@ -43,7 +48,7 @@ export function MenagePostForm() {
           name="title"
           placeholder="Digite o título"
           type="text"
-          defaultValue={""}
+          defaultValue={publicPost?.title || ""}
         />
 
         <Input
@@ -51,7 +56,7 @@ export function MenagePostForm() {
           name="excerpt"
           placeholder="Digite o resumo"
           type="text"
-          defaultValue={""}
+          defaultValue={publicPost?.excerpt || ""}
         />
 
         <MarkdownEditor
@@ -69,10 +74,15 @@ export function MenagePostForm() {
           name="coverImageUrl"
           placeholder="Digite a url da imagem"
           type="text"
-          defaultValue={""}
+          defaultValue={publicPost?.coverImageUrl || ""}
         />
 
-        <InputCheckbox labelText="Publicar?" name="published" type="checkbox" />
+        <InputCheckbox
+          labelText="Publicar?"
+          name="published"
+          type="checkbox"
+          defaultChecked={publicPost?.published || false}
+        />
 
         <div className="mt-4">
           <Button size="md" variant="default" type="submit">

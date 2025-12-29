@@ -1,15 +1,17 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { UploadImageAction } from "@/actions/upload/upload-image-action";
 import { Button } from "@/components/Button";
 import { IMAGE_UPLOAD_MAX_SIZE } from "@/lib/constants";
 import { ImageUpIcon } from "lucide-react";
-import { useRef, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { toast } from "react-toastify";
 
 export function ImageUploader() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, startTransition] = useTransition();
+  const [imgUrl, setImgUrl] = useState<string>("");
 
   function handleChooseFile() {
     if (!fileInputRef.current) return;
@@ -17,11 +19,19 @@ export function ImageUploader() {
   }
   function handleChange() {
     toast.dismiss();
-    if (!fileInputRef.current) return;
+
+    if (!fileInputRef.current) {
+      setImgUrl("");
+      return;
+    }
+
     const fileInput = fileInputRef.current;
     const file = fileInput?.files?.[0];
 
-    if (!file) return;
+    if (!file) {
+      setImgUrl("");
+      return;
+    }
 
     if (file.size > IMAGE_UPLOAD_MAX_SIZE) {
       toast.error("Imagem muito grande! Selecione uma de até 1mb");
@@ -40,7 +50,8 @@ export function ImageUploader() {
         fileInput.value = "";
         return;
       }
-      toast.success(result.url);
+      setImgUrl(result.url);
+      toast.success("Imagem enviada!");
     });
 
     fileInput.value = "";
@@ -53,10 +64,25 @@ export function ImageUploader() {
         variant="default"
         onClick={handleChooseFile}
         type="button"
+        disabled={isUploading}
       >
         <ImageUpIcon />
         Enviar uma imagem 📷
       </Button>
+
+      {!!imgUrl && (
+        <div className="flex flex-col gap-4">
+          <p>
+            <strong>URL: {imgUrl}</strong>
+          </p>
+
+          <img
+            className="rounded-lg"
+            src={imgUrl}
+            alt="Imagem selecionada pelo usuário"
+          />
+        </div>
+      )}
 
       <input
         disabled={isUploading}

@@ -1,9 +1,6 @@
 "use server";
 
-import { drizzleDb } from "@/db/drizzle";
-import { postsTable } from "@/db/drizzle/schemas";
 import { postRepository } from "@/repositories/post";
-import { eq } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
 
 export async function deletePostAction(id: string) {
@@ -13,15 +10,19 @@ export async function deletePostAction(id: string) {
       error: "Dados inválidos",
     };
   }
-  const post = await postRepository.findById(id).catch(() => undefined);
-  if (!post) {
+  let post;
+  try {
+    post = await postRepository.delete(id);
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return {
+        errors: [e.message],
+      };
+    }
     return {
-      error: "Post não encontrado",
+      errors: ["Erro desconhecido"],
     };
   }
-
-  await drizzleDb.delete(postsTable).where(eq(postsTable.id, id));
-
   revalidateTag("posts", "max");
   revalidateTag(`post-${post.slug}`, "max");
 

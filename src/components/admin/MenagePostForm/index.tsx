@@ -3,26 +3,46 @@
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { MarkdownEditor } from "@/components/MarkdownEditor";
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { ImageUploader } from "../ImageUploader";
 import { InputCheckbox } from "@/components/InputCheckbox";
-import { PublicPost } from "@/dto/post/dto";
+import { makePartialPublicPost, PublicPost } from "@/dto/post/dto";
+import { createPostAction } from "@/actions/post/create-post-action";
+import { toast } from "react-toastify";
 
 type MenagePostFormProps = {
   publicPost?: PublicPost;
 };
 
 export function MenagePostForm({ publicPost }: MenagePostFormProps) {
+  const initialState = {
+    formState: makePartialPublicPost(publicPost),
+    errors: [],
+  };
+  const [state, action, isPending] = useActionState(
+    createPostAction,
+    initialState
+  );
+  const { formState } = state;
   const [contentValue, setContentValue] = useState(publicPost?.content || "");
+
+  useEffect(() => {
+    if (state.errors.length > 0) {
+      toast.dismiss();
+
+      state.errors.forEach((error) => toast.error(error));
+    }
+  }, [state.errors]);
+
   return (
-    <form action="" className="mb-16">
+    <form action={action} className="mb-16">
       <div className="flex flex-col gap-6">
         <Input
           labelText="ID"
           name="id"
           placeholder="ID gerado automaticamente"
           type="text"
-          defaultValue={publicPost?.id || ""}
+          defaultValue={formState.id}
           readOnly
         />
 
@@ -31,7 +51,7 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           name="slug"
           placeholder="Slug gerada automaticamente"
           type="text"
-          defaultValue={publicPost?.slug || ""}
+          defaultValue={formState.slug}
           readOnly
         />
 
@@ -40,7 +60,7 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           name="author"
           placeholder="Digite o nome do autor"
           type="text"
-          defaultValue={publicPost?.author || ""}
+          defaultValue={formState.author}
         />
 
         <Input
@@ -48,7 +68,7 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           name="title"
           placeholder="Digite o título"
           type="text"
-          defaultValue={publicPost?.title || ""}
+          defaultValue={formState.title}
         />
 
         <Input
@@ -56,7 +76,7 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           name="excerpt"
           placeholder="Digite o resumo"
           type="text"
-          defaultValue={publicPost?.excerpt || ""}
+          defaultValue={formState.excerpt}
         />
 
         <MarkdownEditor
@@ -74,18 +94,23 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           name="coverImageUrl"
           placeholder="Digite a url da imagem"
           type="text"
-          defaultValue={publicPost?.coverImageUrl || ""}
+          defaultValue={formState.coverImageUrl}
         />
 
         <InputCheckbox
           labelText="Publicar?"
           name="published"
           type="checkbox"
-          defaultChecked={publicPost?.published || false}
+          defaultChecked={formState.published}
         />
 
         <div className="mt-4">
-          <Button size="md" variant="default" type="submit">
+          <Button
+            size="md"
+            variant="default"
+            type="submit"
+            disabled={isPending}
+          >
             Enviar
           </Button>
         </div>

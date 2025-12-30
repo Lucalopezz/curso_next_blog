@@ -1,5 +1,5 @@
 import { MenagePostForm } from "@/components/admin/MenagePostForm";
-import { makePublicPost } from "@/dto/post/dto";
+import { makePublicPostFromDb  } from "@/dto/post/dto";
 import { findPostByIdAdmin } from "@/lib/post/queries/admin";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -21,7 +21,7 @@ export default async function AdminPostIdPage({
   const { id } = await params;
   const post = await findPostByIdAdmin(id).catch();
   if (!post) notFound();
-  const publicPost = makePublicPost(post);
+  const publicPost = makePublicPostFromDb (post);
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-xl font-extrabold">Editar post</h1>

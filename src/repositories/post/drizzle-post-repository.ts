@@ -97,6 +97,7 @@ export class DrizzlePostRepository implements PostRepository {
       .set(postData)
       .where(eq(postsTable.id, id));
 
+    // overwrite the previus data with the new one
     return {
       ...oldPost,
       ...postData,

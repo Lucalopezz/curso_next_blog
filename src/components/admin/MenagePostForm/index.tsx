@@ -9,19 +9,42 @@ import { InputCheckbox } from "@/components/InputCheckbox";
 import { makePartialPublicPost, PublicPost } from "@/dto/post/dto";
 import { createPostAction } from "@/actions/post/create-post-action";
 import { toast } from "react-toastify";
+import { updatePostAction } from "@/actions/post/update-post-actio";
 
-type MenagePostFormProps = {
-  publicPost?: PublicPost;
+type ManagePostFormUpdateProps = {
+  mode: "update";
+  publicPost: PublicPost;
 };
 
-export function MenagePostForm({ publicPost }: MenagePostFormProps) {
+type ManagePostFormCreateProps = {
+  mode: "create";
+};
+
+type ManagePostFormProps =
+  | ManagePostFormUpdateProps
+  | ManagePostFormCreateProps;
+
+export function MenagePostForm(props: ManagePostFormProps) {
+  const { mode } = props;
+
+  let publicPost;
+
+  if (mode === "update") {
+    publicPost = props.publicPost;
+  }
+
+  const actionsMap = {
+    update: updatePostAction,
+    create: createPostAction,
+  };
+
   const initialState = {
     formState: makePartialPublicPost(publicPost),
     errors: [],
   };
   const [state, action, isPending] = useActionState(
-    createPostAction,
-    initialState
+    actionsMap[mode],
+    initialState,
   );
   const { formState } = state;
   const [contentValue, setContentValue] = useState(publicPost?.content || "");
@@ -33,6 +56,14 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
       state.errors.forEach((error) => toast.error(error));
     }
   }, [state.errors]);
+
+  useEffect(() => {
+    if (state.success) {
+      toast.dismiss();
+
+      toast.success("Post atualizado com sucesso!");
+    }
+  }, [state.success]);
 
   return (
     <form action={action} className="mb-16">
@@ -61,6 +92,7 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           placeholder="Digite o nome do autor"
           type="text"
           defaultValue={formState.author}
+          disabled={isPending}
         />
 
         <Input
@@ -69,6 +101,7 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           placeholder="Digite o título"
           type="text"
           defaultValue={formState.title}
+          disabled={isPending}
         />
 
         <Input
@@ -77,6 +110,7 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           placeholder="Digite o resumo"
           type="text"
           defaultValue={formState.excerpt}
+          disabled={isPending}
         />
 
         <MarkdownEditor
@@ -84,10 +118,10 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           value={contentValue}
           setValue={setContentValue}
           textAreaName="content"
-          disabled={false}
+          disabled={isPending}
         />
 
-        <ImageUploader />
+        <ImageUploader disabled={isPending} />
 
         <Input
           labelText="URL da imagem de capa"
@@ -95,6 +129,7 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           placeholder="Digite a url da imagem"
           type="text"
           defaultValue={formState.coverImageUrl}
+          disabled={isPending}
         />
 
         <InputCheckbox
@@ -102,6 +137,7 @@ export function MenagePostForm({ publicPost }: MenagePostFormProps) {
           name="published"
           type="checkbox"
           defaultChecked={formState.published}
+          disabled={isPending}
         />
 
         <div className="mt-4">

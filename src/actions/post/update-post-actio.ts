@@ -10,7 +10,6 @@ import { postRepository } from "@/repositories/post";
 import { getZodErrorMessages } from "@/utils/get-zod-error-messages";
 import { revalidateTag } from "next/cache";
 
-
 type UpdatePostActionState = {
   formState: PublicPost;
   errors: string[];
@@ -21,6 +20,7 @@ export async function updatePostAction(
   prevState: UpdatePostActionState,
   formData: FormData,
 ): Promise<UpdatePostActionState> {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   if (!(formData instanceof FormData)) {
     return {
       formState: prevState.formState,
@@ -29,8 +29,9 @@ export async function updatePostAction(
   }
 
   const id = formData.get("id")?.toString();
+  console.log(id)
 
-  if (!id || typeof id !== "symbol") {
+  if (!id || typeof id !== "string") {
     return {
       formState: prevState.formState,
       errors: ["Id inválido"],

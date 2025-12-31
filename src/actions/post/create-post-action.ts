@@ -20,6 +20,7 @@ export async function createPostAction(
   prevState: CreatePostActionState,
   formData: FormData,
 ): Promise<CreatePostActionState> {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   if (!(formData instanceof FormData)) {
     return {
       formState: prevState.formState,

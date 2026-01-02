@@ -45,3 +45,5 @@ studies.txt
 ./db
 
 /public/uploads
+
+!.env.local-EXAMPLE

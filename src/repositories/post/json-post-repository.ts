@@ -7,6 +7,15 @@ const ROOT_DIR = process.cwd();
 const JSON_POSTS_PATH = resolve(ROOT_DIR, "src", "db", "seed", "posts.json");
 
 export class JsonPostRepository implements PostRepository {
+  create(post: PostModel): Promise<PostModel> {
+    throw new Error("Method not implemented.");
+  }
+  delete(id: string): Promise<PostModel> {
+    throw new Error("Method not implemented.");
+  }
+  update(id: string, newPostData: Omit<PostModel, "id" | "slug" | "createdAt" | "updatedAt">): Promise<PostModel> {
+    throw new Error("Method not implemented.");
+  }
   private async readFromDisk(): Promise<PostModel[]> {
     const jsonContent = await readFile(JSON_POSTS_PATH, "utf-8");
     const parsedJson = JSON.parse(jsonContent);

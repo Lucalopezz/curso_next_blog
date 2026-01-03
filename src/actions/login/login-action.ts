@@ -1,6 +1,9 @@
 "use server";
 
-import { verifyPassword } from "@/lib/login/manage-login";
+import { createLoginSession, verifyPassword } from "@/lib/login/manage-login";
+import { redirect } from "next/navigation";
+
+
 
 type LoginActionState = {
   username: string;
@@ -38,4 +41,6 @@ export async function loginAction(state: LoginActionState, formData: FormData) {
       error: "Usuário ou senha inválidos",
     };
   }
+  await createLoginSession(username);
+  redirect("/admin/post");
 }

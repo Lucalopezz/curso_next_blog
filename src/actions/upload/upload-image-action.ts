@@ -5,6 +5,7 @@ import {
   IMAGE_UPLOAD_DIRECTORY,
   IMAGE_UPLOAD_MAX_SIZE,
 } from "@/lib/constants";
+import { verifyLoginSession } from "@/lib/login/manage-login";
 import { mkdir, writeFile } from "fs/promises";
 import { extname, resolve } from "path";
 
@@ -18,6 +19,11 @@ export async function UploadImageAction(
   const makeResult = ({ url = "", error = "" }) => {
     return { url, error };
   };
+  const isAuthenticated = await verifyLoginSession();
+
+  if (!isAuthenticated) {
+    return makeResult({ error: "Faça login novamente" });
+  }
 
   if (!(formData instanceof FormData)) {
     return makeResult({ error: "Dados inválidos" });
@@ -56,7 +62,6 @@ export async function UploadImageAction(
   await writeFile(fileFullPath, buffer);
 
   const url = `${IMAGE_SERVER_URL}/${uniqueImageName}`;
-
 
   return makeResult({ url });
 }

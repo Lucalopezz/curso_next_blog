@@ -4,7 +4,7 @@ import {
   makePartialPublicPost,
   makePublicPostFromDb,
   PublicPost,
-} from "@/dto/post/dto";
+} from "@/lib/post/dto/post/dto";
 import { verifyLoginSession } from "@/lib/login/manage-login";
 import { PostUpdateSchema } from "@/lib/post/validations";
 import { postRepository } from "@/repositories/post";

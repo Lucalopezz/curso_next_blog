@@ -1,7 +1,7 @@
 import { PostModel } from "@/models/post/post-model";
 import { PostRepository } from "./post-repository";
-import { drizzleDb } from "@/db/drizzle";
-import { postsTable } from "@/db/drizzle/schemas";
+import { drizzleDb } from "../../db/drizzle";
+import { postsTable } from "../../db/drizzle/schemas";
 import { eq } from "drizzle-orm";
 
 export class DrizzlePostRepository implements PostRepository {

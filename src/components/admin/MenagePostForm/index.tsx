@@ -6,7 +6,7 @@ import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { useActionState, useEffect, useState } from "react";
 import { ImageUploader } from "../ImageUploader";
 import { InputCheckbox } from "@/components/InputCheckbox";
-import { makePartialPublicPost, PublicPost } from "@/dto/post/dto";
+import { makePartialPublicPost, PublicPost } from "@/lib/post/dto/post/dto";
 import { createPostAction } from "@/actions/post/create-post-action";
 import { toast } from "react-toastify";
 import { updatePostAction } from "@/actions/post/update-post-actio";

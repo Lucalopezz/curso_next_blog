@@ -1,5 +1,5 @@
 import { MenagePostForm } from "@/components/admin/MenagePostForm";
-import { makePublicPostFromDb } from "@/dto/post/dto";
+import { makePublicPostFromDb } from "@/lib/post/dto/post/dto";
 import { findPostByIdAdmin } from "@/lib/post/queries/admin";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";

@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/admin/LoginForm";
+import { LoginForm } from "@/components/LoginForm";
 import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";

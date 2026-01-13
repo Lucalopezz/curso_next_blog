@@ -5,6 +5,7 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { LogInIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -14,6 +15,10 @@ export function LoginForm() {
 
     errors: [],
   };
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const userChanged = searchParams.get("userChanged");
+  const created = searchParams.get("created");
 
   const [state, action, isPending] = useActionState(loginAction, initialState);
 
@@ -26,6 +31,24 @@ export function LoginForm() {
       });
     }
   }, [state]);
+
+  useEffect(() => {
+    if (userChanged === "1") {
+      toast.dismiss();
+      toast.success("Seu usuário foi modificado. Faça login novamente.");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("userChanged");
+      router.replace(url.toString());
+    }
+
+    if (created === "1") {
+      toast.dismiss();
+      toast.success("Seu usuário criado.");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("created");
+      router.replace(url.toString());
+    }
+  }, [userChanged, created, router]);
 
   return (
     <div className="flex items-center justify-center text-center max-w-sm mt-16 mb-32 mx-auto">

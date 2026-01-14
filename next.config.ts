@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // this project needs this config because the images are in next server (public/uploads)
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [
@@ -19,6 +18,7 @@ const nextConfig: NextConfig = {
         search: "",
       },
     ],
+    unoptimized: true,
   },
 };
 export default nextConfig;

@@ -85,7 +85,7 @@ export function LoginForm() {
           Entrar
         </Button>
         <p className="text-sm/tight">
-          <Link href="/login">Não tem conta? Criar</Link>
+          <Link href="/user/new">Não tem conta? Criar</Link>
         </p>
       </form>
     </div>
